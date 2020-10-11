@@ -15,7 +15,7 @@ subtitle:
   
 # 网站图标和侧边栏logo
 favicon: /favicon.ico
-logo: /images/ayer-side.svg
+logo: https://i.loli.net/2020/10/11/Qfgp8N1sr9oi6Ex.jpg #/images/ayer-side.svg
 
 # 封面配置
 # enable-是否启用封面；path-封面背景图；logo-封面logo
@@ -102,7 +102,7 @@ layout:
 # GitHub Ribbons-封面右上角的forkme，换样式直接在source/images目录下替换forkme图片
 github:
   # (关闭请设置为false)
-  enable: true
+  enable: false
   url: https://github.com/ky-du
 
 # 访问量统计(不蒜子)
