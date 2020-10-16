@@ -4,27 +4,27 @@
     <title>关于我</title>
     <url>/2020/10/10/about/</url>
     <content><![CDATA[<p>上海交大硕士在读，研究方向为深度学习模型压缩，目前在字节跳动AI Lab实习。</p>
-<p>联系方式：<a href="mailto:&#x64;&#117;&#107;&#x75;&#x6e;&#121;&#117;&#x61;&#110;&#x40;&#115;&#106;&#116;&#117;&#x2e;&#x65;&#x64;&#117;&#46;&#x63;&#x6e;">&#x64;&#117;&#107;&#x75;&#x6e;&#121;&#117;&#x61;&#110;&#x40;&#115;&#106;&#116;&#117;&#x2e;&#x65;&#x64;&#117;&#46;&#x63;&#x6e;</a></p>
+<p>联系方式：<a href="mailto:&#x64;&#117;&#x6b;&#x75;&#x6e;&#121;&#117;&#97;&#x6e;&#64;&#x73;&#106;&#x74;&#117;&#x2e;&#x65;&#x64;&#117;&#46;&#x63;&#110;">&#x64;&#117;&#x6b;&#x75;&#x6e;&#121;&#117;&#97;&#x6e;&#64;&#x73;&#106;&#x74;&#117;&#x2e;&#x65;&#x64;&#117;&#46;&#x63;&#110;</a></p>
 ]]></content>
   </entry>
   <entry>
     <title>设计 Python 函数参数的正确姿势</title>
     <url>/2020/10/15/python_args_design/</url>
-    <content><![CDATA[<h1 id="设计-Python-函数参数的正确姿势"><a href="#设计-Python-函数参数的正确姿势" class="headerlink" title="设计 Python 函数参数的正确姿势"></a>设计 Python 函数参数的正确姿势</h1><h2 id="问题介绍"><a href="#问题介绍" class="headerlink" title="问题介绍"></a>问题介绍</h2><p>不合理的函数参数设计，可能会给程序带来一些难以发现的bug，比如下面这个例子。</p>
+    <content><![CDATA[<h3 id="问题介绍"><a href="#问题介绍" class="headerlink" title="问题介绍"></a>问题介绍</h3><p>不合理的函数参数设计，可能会给程序带来一些难以发现的bug，比如下面这个例子。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def hauntedfunc(queue&#x3D;[]):</span><br><span class="line">    queue.append(0)</span><br><span class="line">    return queue</span><br></pre></td></tr></table></figure>
 
 <p>hauntedfunc 函数的功能很简单，目的就是向输入的 queue 中增加一个0元素。但是当我们调用<br>hauntedfunc 时，奇怪的现象出现了：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 第一次调用，符合预期</span><br><span class="line">&gt;&gt;&gt; hauntedfunc(queue&#x3D;[1])</span><br><span class="line">[1, 0]</span><br><span class="line"># 第二次调用，符合预期</span><br><span class="line">&gt;&gt;&gt; hauntedfunc()</span><br><span class="line">[0]</span><br><span class="line"># 第三次调用，不符合预期</span><br><span class="line">&gt;&gt;&gt; hauntedfunc()</span><br><span class="line">[0, 0]</span><br></pre></td></tr></table></figure>
-
+<p>第三次调用的输出结果多了一个0元素！</p>
 <hr>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>第三次调用的输出结果多了一个0元素！而这个 bug 的原因，是我们使用了可变类型作为参数的默认值，即 <code>queue=[]</code>。在 python 中, 函数参数的默认值被保存在了函数对象的 <code>.__defaults__</code> 属性中。当执行 hauntedfunc() 时, queue 变量其实只是默认参数 <code>[]</code> 的引用。我们可以用下面的脚本来验证：</p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>而这个 bug 的原因，是我们使用了可变类型作为参数的默认值，即 <code>queue=[]</code>。在 python 中, 函数参数的默认值被保存在了函数对象的 <code>.__defaults__</code> 属性中。当执行 hauntedfunc() 时, queue 变量其实只是默认参数 <code>[]</code> 的引用。我们可以用下面的脚本来验证：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; id(hauntedfunc.__defaults__[0])</span><br><span class="line">1788363018056</span><br><span class="line">&gt;&gt;&gt; id(hauntedfunc())</span><br><span class="line">1788363018056</span><br></pre></td></tr></table></figure>
 
 <p>所以在第二次调用后，hauntedfunc 实际上已经变成了:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def hauntedfunc(queue&#x3D;[0]):</span><br><span class="line">    queue.append(0)</span><br><span class="line">    return queue</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>为了避免这个 bug，我们可以把 hauntedfunc 函数做如下修改。由于 <code>None</code> 为不可变对象，所以自然不必担心函数的默认值被意外修改。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>为了避免这个 bug，我们可以把 hauntedfunc 函数做如下修改。由于 <code>None</code> 为不可变对象，所以自然不必担心函数的默认值被意外修改。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">def hauntedfunc(queue&#x3D;None):</span><br><span class="line">    if queue is None:</span><br><span class="line">        queue &#x3D; []</span><br><span class="line">    queue.append(0)</span><br><span class="line">    return queue</span><br></pre></td></tr></table></figure>
 
 <p>这样做看起来没什么问题了，但是如果我们希望函数不要修改传入的参数，还需要对 hauntedfunc 做一些修改。具体地，可以通过 <code>list()</code> 创建传入参数的副本，后续操作均在副本上进行。这里要注意深拷贝浅拷贝的问题，具体细节就不再赘述了。</p>
@@ -37,6 +37,7 @@
       </categories>
       <tags>
         <tag>bug清除计划</tag>
+        <tag>python</tag>
       </tags>
   </entry>
 </search>
