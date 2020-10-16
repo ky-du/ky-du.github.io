@@ -21,8 +21,7 @@ def hauntedfunc(queue=[]):
     return queue
 ```
 
-hauntedfunc 函数的功能很简单，目的就是向输入的 queue 中增加一个0元素。但是当我们调用
-hauntedfunc 时，奇怪的现象出现了：
+hauntedfunc 函数的功能很简单，目的就是向输入的 queue 中增加一个0元素。但是当我们调用 hauntedfunc 时，奇怪的现象出现了：
 
 ```
 # 第一次调用，符合预期
