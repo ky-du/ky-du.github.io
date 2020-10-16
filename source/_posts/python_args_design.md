@@ -77,7 +77,7 @@ def hauntedfunc(queue=None):
     else:
         queue = list(queue)
     queue.append(0)
-    print ('queue =', queue)
+    return queue
 ```
 ```
 >>> constant_list = [1]
