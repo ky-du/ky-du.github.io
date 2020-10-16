@@ -104,7 +104,7 @@
   <h3 id="问题介绍"><a href="#问题介绍" class="headerlink" title="问题介绍"></a>问题介绍</h3><p>不合理的函数参数设计，可能会给程序带来一些难以发现的bug，比如下面这个例子。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def hauntedfunc(queue&#x3D;[]):</span><br><span class="line">    queue.append(0)</span><br><span class="line">    return queue</span><br></pre></td></tr></table></figure>
 
-<p>hauntedfunc 函数的功能很简单，目的就是向输入的 queue 中增加一个0元素。但是当我们调用<br>hauntedfunc 时，奇怪的现象出现了：</p>
+<p>hauntedfunc 函数的功能很简单，目的就是向输入的 queue 中增加一个0元素。但是当我们调用 hauntedfunc 时，奇怪的现象出现了：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 第一次调用，符合预期</span><br><span class="line">&gt;&gt;&gt; hauntedfunc(queue&#x3D;[1])</span><br><span class="line">[1, 0]</span><br><span class="line"># 第二次调用，符合预期</span><br><span class="line">&gt;&gt;&gt; hauntedfunc()</span><br><span class="line">[0]</span><br><span class="line"># 第三次调用，不符合预期</span><br><span class="line">&gt;&gt;&gt; hauntedfunc()</span><br><span class="line">[0, 0]</span><br></pre></td></tr></table></figure>
 <p>第三次调用的输出结果多了一个0元素！</p>
 <hr>
