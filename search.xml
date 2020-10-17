@@ -4,7 +4,7 @@
     <title>关于我</title>
     <url>/2020/10/10/about/</url>
     <content><![CDATA[<p>上海交大硕士在读，研究方向为深度学习模型压缩，目前在字节跳动AI Lab实习。</p>
-<p>联系方式：<a href="mailto:&#x64;&#117;&#107;&#117;&#110;&#121;&#117;&#x61;&#110;&#64;&#x73;&#x6a;&#116;&#x75;&#x2e;&#x65;&#100;&#117;&#46;&#x63;&#x6e;">&#x64;&#117;&#107;&#117;&#110;&#121;&#117;&#x61;&#110;&#64;&#x73;&#x6a;&#116;&#x75;&#x2e;&#x65;&#100;&#117;&#46;&#x63;&#x6e;</a></p>
+<p>联系方式：<a href="mailto:&#100;&#117;&#107;&#117;&#110;&#121;&#x75;&#x61;&#x6e;&#x40;&#x73;&#x6a;&#x74;&#117;&#46;&#x65;&#x64;&#x75;&#x2e;&#x63;&#110;">&#100;&#117;&#107;&#117;&#110;&#121;&#x75;&#x61;&#x6e;&#x40;&#x73;&#x6a;&#x74;&#117;&#46;&#x65;&#x64;&#x75;&#x2e;&#x63;&#110;</a></p>
 ]]></content>
   </entry>
   <entry>
@@ -38,6 +38,26 @@
       <tags>
         <tag>bug清除计划</tag>
         <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 风格的对象</title>
+    <url>/2020/10/16/python_style_object/</url>
+    <content><![CDATA[<p>本篇为《流畅的Python》第9章阅读笔记，主要知识点如下。</p>
+<h4 id="classmethod-与-staticmethod"><a href="#classmethod-与-staticmethod" class="headerlink" title="classmethod 与 staticmethod"></a>classmethod 与 staticmethod</h4><p>两者均是定义在类中的函数，并且不需要实例化便可以调用。不同点在于，classmethod 的第一个参数默认为所在类，而 staticmethod 可以被看作是一个普通的函数。</p>
+<h4 id="私有属性与受保护属性"><a href="#私有属性与受保护属性" class="headerlink" title="私有属性与受保护属性"></a>私有属性与受保护属性</h4><p>这两种属性都是为了避免子类意外覆盖“私有属性”。但实际上，python 中无法真正实现变量的“私有”和“受保护”。</p>
+<ul>
+<li>私有对象：以双下划线 <code>__</code> 开头，例如<code>Dog</code>类中的<code>__color</code>属性。实例化后，该属性会被“命名改写”机制改为<code>_Dog__color</code>。因此，如果了解了具体的改写规则，所谓的私有对象其实可以也是可以被访问到的。</li>
+<li>受保护属性：以单下划线开头。该规则为约定俗成，python 解释器实际上不会对其进行特殊处理。</li>
+</ul>
+<h4 id="slots-类属性"><a href="#slots-类属性" class="headerlink" title="__slots__类属性"></a><code>__slots__</code>类属性</h4><p>python 会构造一个名为<code>__dict__</code>的字典来存储实例属性，而字典会消耗较多的内存。当实例数比较多时，这个问题会更加明显。为了解决这个问题，可以利用<code>__slots__</code>定义实例属性，由于实例只能拥有<code>__slots__</code>中定义的属性，所以解释器便可以将实例属性存储在类似元组的结构中，达到减少内存的目的。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>学习笔记</tag>
       </tags>
   </entry>
 </search>
