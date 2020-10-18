@@ -4,7 +4,7 @@
     <title>关于我</title>
     <url>/2020/10/10/about/</url>
     <content><![CDATA[<p>上海交大硕士在读，研究方向为深度学习模型压缩，目前在字节跳动AI Lab实习。</p>
-<p>联系方式：<a href="mailto:&#100;&#117;&#107;&#117;&#110;&#121;&#x75;&#x61;&#x6e;&#x40;&#x73;&#x6a;&#x74;&#117;&#46;&#x65;&#x64;&#x75;&#x2e;&#x63;&#110;">&#100;&#117;&#107;&#117;&#110;&#121;&#x75;&#x61;&#x6e;&#x40;&#x73;&#x6a;&#x74;&#117;&#46;&#x65;&#x64;&#x75;&#x2e;&#x63;&#110;</a></p>
+<p>联系方式：<a href="mailto:&#100;&#117;&#107;&#117;&#x6e;&#121;&#117;&#x61;&#x6e;&#64;&#x73;&#x6a;&#x74;&#117;&#46;&#x65;&#100;&#x75;&#x2e;&#x63;&#x6e;">&#100;&#117;&#107;&#117;&#x6e;&#121;&#117;&#x61;&#x6e;&#64;&#x73;&#x6a;&#x74;&#117;&#46;&#x65;&#100;&#x75;&#x2e;&#x63;&#x6e;</a></p>
 ]]></content>
   </entry>
   <entry>
@@ -38,6 +38,29 @@
       <tags>
         <tag>bug清除计划</tag>
         <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 切片原理</title>
+    <url>/2020/10/17/python_slice/</url>
+    <content><![CDATA[<p>《流畅的Python》第10.5小结介绍了切片原理，下文为简单总结。</p>
+<p>以<code>List</code>对象为例，我们通常都会以如下方式进行切片：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; lst &#x3D; [i for i in range(10)]</span><br><span class="line">&gt;&gt;&gt; lst[1:6:2]</span><br><span class="line">[1, 3, 5]</span><br></pre></td></tr></table></figure>
+
+<p>那切片背后的原理是什么呢？</p>
+<p>简单来说，python 会将<code>[start:stop:stride]</code>转化为<code>slice</code>类的实例，然后将该实例送入<code>__getitem__</code>函数中。在某些情况下，可以使用slice.indices()优雅地处理缺失索引和负数索引的情况，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 5为序列长度</span><br><span class="line">&gt;&gt;&gt; slice(-3, None, None).indices(5) </span><br><span class="line">(2, 5, 1)</span><br></pre></td></tr></table></figure>
+
+
+
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>学习笔记</tag>
       </tags>
   </entry>
   <entry>
